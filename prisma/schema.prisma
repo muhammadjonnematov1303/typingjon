@@ -1,0 +1,104 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
+  output          = "../node_modules/.prisma/client"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String
+  email         String    @unique
+  password      String
+  image         String?
+  emailVerified DateTime?
+  role          String    @default("user")
+  banned        Boolean   @default(false)
+  ball          Int       @default(0)
+  owr           Int       @default(0)
+  lastLoginAt   DateTime?
+  lastSeenAt    DateTime?
+  createdAt     DateTime  @default(now())
+}
+
+model Notification {
+  id        String   @id @default(cuid())
+  userId    String
+  title     String
+  body      String
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+}
+
+model Result {
+  id        String   @id @default(cuid())
+  userId    String
+  type      String   @default("test") // "test" | "lesson"
+  wpm       Int
+  accuracy  Float
+  duration  Int
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@index([wpm])
+  @@index([userId, type, createdAt])
+}
+
+model LessonProgress {
+  id           String    @id @default(cuid())
+  userId       String
+  lessonId     String
+  completed    Boolean   @default(false)
+  bestWpm      Int?
+  bestAccuracy Float?
+  attempts     Int       @default(0)
+  completedAt  DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  @@unique([userId, lessonId])
+  @@index([userId])
+}
+
+model Lesson {
+  id          String   @id
+  order       Int
+  title       String
+  description String
+  text        String
+  difficulty  String
+  category    String   @default("Umumiy")
+  ball        Int      @default(90)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model VerificationCode {
+  id        String   @id @default(cuid())
+  email     String
+  code      String
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@index([email])
+}
+
+model SiteSettings {
+  id              String   @id @default("singleton")
+  siteName        String   @default("Typingjon")
+  siteDescription String   @default("Interaktiv darslar, real vaqt fikr-mulohazasi va o'yinlashtirilgan mashqlar orqali yozish tezligi va aniqligingizni oshiring.")
+  contactEmail    String?
+  contactTelegram String?
+  logoUrl         String?
+  faviconUrl      String?
+  seoTitle        String?
+  seoDescription  String?
+  seoKeywords     String?
+  ogImageUrl      String?
+  updatedAt       DateTime @updatedAt
+}

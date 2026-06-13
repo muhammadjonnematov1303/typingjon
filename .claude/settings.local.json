@@ -1,0 +1,37 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(cd \"c:\\\\Users\\\\KhanService\\\\Desktop\\\\NovaType\"; if \\(Test-Path \"node_modules\\\\next\\\\package.json\"\\) { \\(Get-Content \"node_modules\\\\next\\\\package.json\" | ConvertFrom-Json\\).version } else { \"next o'rnatilmagan\" })",
+      "PowerShell(Invoke-WebRequest -Uri \"http://localhost:3000\" -UseBasicParsing -TimeoutSec 5)",
+      "PowerShell(cd \"c:\\\\Users\\\\KhanService\\\\Desktop\\\\typingjon\"; npx tsc --noEmit 2>&1 | Where-Object { $_ -notmatch \"footer.tsx\" } | Select-Object -First 20)",
+      "PowerShell(cd \"c:\\\\Users\\\\KhanService\\\\Desktop\\\\typingjon\"; $env:DATABASE_URL=\"postgresql://user:password@localhost:5432/typingjon\"; npx prisma generate 2>&1 | Select-Object -Last 8)",
+      "PowerShell(cd \"c:\\\\Users\\\\KhanService\\\\Desktop\\\\typingjon\"; npx tsc --noEmit 2>&1 | Where-Object { $_ -notmatch \"footer.tsx\" } | Select-Object -First 15)",
+      "PowerShell(cd \"c:\\\\Users\\\\KhanService\\\\Desktop\\\\typingjon\"; npx tsc --noEmit 2>&1 | Where-Object { $_ -notmatch \"footer.tsx\" } | Select-Object -First 10)",
+      "PowerShell(Get-Content \"c:\\\\Users\\\\KhanService\\\\Desktop\\\\typingjon\\\\.env.local\" | ForEach-Object { \"[$_]\" })",
+      "PowerShell(Get-Process -Name \"node\" -ErrorAction SilentlyContinue)",
+      "PowerShell(Stop-Process -Force)",
+      "PowerShell(Stop-Process -Force -ErrorAction SilentlyContinue)",
+      "PowerShell(New-Item -ItemType Directory -Force \"C:\\\\Users\\\\KhanService\\\\Desktop\\\\typingjon\\\\app\\\\api\\\\auth\\\\google\\\\callback\")",
+      "PowerShell(New-Item -ItemType Directory -Force \"C:\\\\Users\\\\KhanService\\\\Desktop\\\\typingjon\\\\app\\\\dashboard\\\\_components\")",
+      "PowerShell(New-Item -ItemType Directory -Force \"C:\\\\Users\\\\KhanService\\\\Desktop\\\\typingjon\\\\app\\\\api\\\\notifications\")",
+      "PowerShell(cd \"c:\\\\Users\\\\KhanService\\\\Desktop\\\\typingjon\"; npx tsc --noEmit 2>&1 | Where-Object { $_ -match \"dashboard\" })",
+      "PowerShell(cd c:\\\\Users\\\\KhanService\\\\Desktop\\\\typingjon; \\(Invoke-WebRequest -Uri \"http://localhost:3000/dashboard\" -UseBasicParsing -TimeoutSec 5\\).StatusCode)",
+      "PowerShell(pnpm add recharts sonner)",
+      "PowerShell(npx prisma db push --accept-data-loss 2>&1)",
+      "PowerShell(npx prisma generate 2>&1)",
+      "PowerShell(Get-NetTCPConnection -LocalPort 3000 -ErrorAction SilentlyContinue)",
+      "Skill(run)",
+      "Skill(run:*)",
+      "PowerShell(npx tsc --noEmit -p tsconfig.json 2>&1)",
+      "PowerShell(node qa-help-shot.mjs 2>&1)",
+      "PowerShell(Invoke-WebRequest -Uri \"http://localhost:3000/register\" -UseBasicParsing -TimeoutSec 5 | Select-Object StatusCode, @{n='redirect';e={$_.Headers.Location}})",
+      "PowerShell(try { $r = Invoke-WebRequest -Uri \"http://localhost:3000/api/auth/google/callback\" -UseBasicParsing -MaximumRedirection 0 } catch { $resp = $_.Exception.Response; \"$\\($resp.StatusCode.value__\\) -> $\\($resp.Headers['Location']\\)\" })",
+      "PowerShell(curl.exe -s -o NUL -w \"%{http_code} %{redirect_url}`n\" \"http://localhost:3000/api/auth/google/callback\")",
+      "PowerShell(curl.exe -s -o NUL -w \"%{http_code} %{redirect_url}`n\" \"http://localhost:3000/api/auth/google/callback?code=fake_test_code_123\")",
+      "PowerShell(Get-Process -Name node -ErrorAction SilentlyContinue)",
+      "PowerShell(pnpm run build 2>&1)",
+      "PowerShell(Get-ChildItem \"c:\\\\Users\\\\KhanService\\\\Desktop\\\\typingjon\" -Filter \"vercel.json\" -ErrorAction SilentlyContinue; \\(Get-Command vercel -ErrorAction SilentlyContinue\\) -ne $null)",
+      "PowerShell(Get-NetTCPConnection -State Listen | Where-Object { $_.LocalPort -ge 3000 -and $_.LocalPort -le 3010 } | Select-Object LocalPort, OwningProcess -Unique)"
+    ]
+  }
+}
