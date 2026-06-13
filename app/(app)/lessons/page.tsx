@@ -65,7 +65,7 @@ export default async function LessonsPage({
           <BookOpen className="h-5 w-5 text-blue-600" />
           Darslar
         </h1>
-        <p className="text-sm text-slate-400">100 qadamli kontekst injeneriya kursi</p>
+        <p className="text-sm text-slate-400 dark:text-slate-500">{lessons.length} qadamli yozish kursi</p>
       </div>
 
       {/* Stats grid */}

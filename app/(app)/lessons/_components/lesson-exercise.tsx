@@ -15,24 +15,10 @@ interface Props {
 type CharState = 'correct' | 'corrected' | 'wrong' | 'cursor' | 'pending' | 'demo'
 type Phase = 'learn' | 'practice'
 
-const STEP_COUNT = 6
-
-// Split a lesson into up to 6 word-balanced steps. Each step is first
-// demonstrated (the app types it), then practised by the user.
-function splitSteps(text: string): string[] {
-  const words = text.trim().split(/\s+/).filter(Boolean)
-  const count = Math.min(STEP_COUNT, Math.max(words.length, 1))
-  const steps: string[] = []
-  for (let k = 0; k < count; k++) {
-    const start = Math.floor((k * words.length) / count)
-    const end   = Math.floor(((k + 1) * words.length) / count)
-    steps.push(words.slice(start, end).join(' '))
-  }
-  return steps
-}
-
 export function LessonExercise({ text, onComplete, resetKey }: Props) {
-  const steps      = useMemo(() => splitSteps(text), [text])
+  // Each lesson is already a small chunk (the 100 lessons were split into 600),
+  // so a lesson runs as a single Learn (demo) → Practice flow.
+  const steps      = useMemo(() => [text], [text])
   const totalChars = useMemo(() => steps.reduce((a, s) => a + s.length, 0), [steps])
 
   const [stepIndex, setStepIndex] = useState(0)
@@ -349,8 +335,8 @@ export function LessonExercise({ text, onComplete, resetKey }: Props) {
   return (
     <div className="flex w-full flex-col items-center gap-4">
 
-      {/* Step + phase indicator */}
-      <div className="flex w-full max-w-xl items-center justify-between gap-3">
+      {/* Phase indicator */}
+      <div className="flex w-full items-center justify-center gap-3">
         <span className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-bold ${
           phase === 'learn'
             ? 'bg-blue-50 text-blue-600 ring-1 ring-blue-100 dark:bg-blue-950/40 dark:text-blue-400 dark:ring-blue-900/40'
@@ -359,16 +345,6 @@ export function LessonExercise({ text, onComplete, resetKey }: Props) {
           {phase === 'learn' ? <><Eye className="h-3.5 w-3.5" /> O&apos;rganish — kuzating</> : <><Keyboard className="h-3.5 w-3.5" /> Mashq — siz yozing</>}
         </span>
 
-        <div className="flex items-center gap-1.5">
-          {steps.map((_, i) => (
-            <span key={i} className={`h-1.5 rounded-full transition-all ${
-              i < stepIndex ? 'w-4 bg-emerald-500'
-              : i === stepIndex ? 'w-6 bg-blue-600'
-              : 'w-4 bg-slate-200 dark:bg-slate-700'
-            }`} />
-          ))}
-          <span className="ml-1.5 font-mono text-[11px] font-bold text-slate-400 dark:text-slate-500">{stepIndex + 1}/{steps.length}</span>
-        </div>
       </div>
 
       {/* Stats bar */}

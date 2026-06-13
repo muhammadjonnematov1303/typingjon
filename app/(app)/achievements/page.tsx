@@ -158,15 +158,20 @@ function passed(d: Def, s: Stats): boolean {
   }
 }
 
-const ACHIEVEMENTS = DEFS.map((d, i) => ({
-  id:    `a-${i + 1}`,
-  title: d.name,
-  desc:  descFor(d),
-  Icon:  d.Icon ?? KIND_ICON[d.kind],
-  milestone: !!d.gold,
-  ...(d.gold ? GOLD : PALETTE[i % PALETTE.length]),
-  def:   d,
-}))
+const ACHIEVEMENTS = DEFS.map((d, i) => {
+  // Lessons were split 100 → 600, so scale lesson thresholds ×6 (keep the very
+  // first at 1). Quarter/half/three-quarter milestones stay proportional.
+  const def: Def = d.kind === 'lesson' && d.n > 1 ? { ...d, n: d.n * 6 } : d
+  return {
+    id:    `a-${i + 1}`,
+    title: def.name,
+    desc:  descFor(def),
+    Icon:  def.Icon ?? KIND_ICON[def.kind],
+    milestone: !!def.gold,
+    ...(def.gold ? GOLD : PALETTE[i % PALETTE.length]),
+    def,
+  }
+})
 
 type Resolved = (typeof ACHIEVEMENTS)[number]
 
